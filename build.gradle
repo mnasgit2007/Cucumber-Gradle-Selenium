@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.natsir'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.11.4'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.11.4'
+    testImplementation group: 'org.junit.vintage', name: 'junit-vintage-engine', version: '5.11.4'
+
+    implementation group: 'io.cucumber', name: 'cucumber-java', version: '7.20.1'
+    testImplementation group: 'io.cucumber', name: 'cucumber-junit', version: '7.20.1'
+    testImplementation group: 'io.cucumber', name: 'cucumber-junit-platform-engine', version: '7.20.1'
+
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.28.1'
+    implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '5.9.2'
+
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
+    testImplementation 'junit:junit:4.13.1'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+    configurations {
+        cucumberRuntime{
+            extendsFrom testImplementation
+
+    }
+}
+
+def tags = (findProperty('tags') == null) ? 'not @exclude' : findProperty('tags') + ' and not @exclude'
+
+task cucumber() {
+    description("Running Cucumber Test")
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = [
+                    '--plugin', 'pretty',
+                    '--plugin', 'html:reports/cucumber-api-report.html',
+                    '--glue', 'stepDef',
+                    '--tags', "${tags}",
+                    'src/test/java/features']
+        }
+    }
+}
