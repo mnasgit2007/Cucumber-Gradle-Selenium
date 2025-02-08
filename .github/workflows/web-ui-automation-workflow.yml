@@ -30,6 +30,9 @@ jobs:
     - name: Grant execute permission to gradlew
       run: chmod +x gradlew
 
+    - name: Build with Gradle
+      run: ./gradlew build
+
     # Execute gradle command for running cucumber test
     - name: Run Cucumber Tests
       run: ./gradlew cucumber
