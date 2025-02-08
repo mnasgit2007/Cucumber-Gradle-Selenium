@@ -27,8 +27,8 @@ jobs:
       uses: browser-actions/setup-chrome@latest
 
     # setup gradlew
-    - name: Setup gradlew
-      run: chmod + gradlew
+    - name: Grant execute permission to gradlew
+      run: chmod +x gradlew
 
     # Execute gradle command for running cucumber test
     - name: Run Cucumber Tests
