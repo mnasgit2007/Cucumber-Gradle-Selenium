@@ -11,15 +11,18 @@ public class BaseTest {
     protected static WebDriver driver;
 
     protected void getDriver(){
+        // Mengatur ChromeDriver menggunakan WebDriverManager
+        WebDriverManager.chromedriver().setup();
+
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
-        WebDriverManager.chromedriver().setup();
+        
+        // Membuat objek ChromeDriver
         driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
-        driver = WebDriverManager.chromiumdriver().create();
+        // Mengatur timeout implisit
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 }
