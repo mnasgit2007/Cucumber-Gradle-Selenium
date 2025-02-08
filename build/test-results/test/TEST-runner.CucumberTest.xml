@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="runner.CucumberTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-02-08T13:37:18" hostname="DESKTOP-DS3DLFS" time="22.936">
+  <properties/>
+  <testcase name="Login using valid email and password" classname="runner.CucumberTest" time="11.373"/>
+  <testcase name="Login using invalid email and password" classname="runner.CucumberTest" time="11.561"/>
+  <system-out><![CDATA[
+@login @valid-login
+Scenario: Login using valid email and password ?[90m# src/test/java/features/login.feature:5?[0m
+  ?[32mGiven ?[0m?[32muser is on login page?[0m                  ?[90m# stepDef.LoginStepDef.userIsOnLoginPage()?[0m
+  ?[32mAnd ?[0m?[32muser input username with ?[0m?[32m?[1m"standard_user"?[0m ?[90m# stepDef.LoginStepDef.userInputUsernameWith(java.lang.String)?[0m
+  ?[32mAnd ?[0m?[32muser input password with ?[0m?[32m?[1m"secret_sauce"?[0m  ?[90m# stepDef.LoginStepDef.userInputPasswordWith(java.lang.String)?[0m
+  ?[32mWhen ?[0m?[32muser click login button?[0m                 ?[90m# stepDef.LoginStepDef.userClickLoginButton()?[0m
+  ?[32mThen ?[0m?[32muser is on homepage?[0m                     ?[90m# stepDef.HomeStepDef.userIsOnHomepage()?[0m
+
+@login @invalid-login
+Scenario: Login using invalid email and password                                                         ?[90m# src/test/java/features/login.feature:13?[0m
+  ?[32mGiven ?[0m?[32muser is on login page?[0m                                                                            ?[90m# stepDef.LoginStepDef.userIsOnLoginPage()?[0m
+  ?[32mAnd ?[0m?[32muser input username with ?[0m?[32m?[1m"standard_user"?[0m                                                           ?[90m# stepDef.LoginStepDef.userInputUsernameWith(java.lang.String)?[0m
+  ?[32mAnd ?[0m?[32muser input password with ?[0m?[32m?[1m"invalid"?[0m                                                                 ?[90m# stepDef.LoginStepDef.userInputPasswordWith(java.lang.String)?[0m
+  ?[32mWhen ?[0m?[32muser click login button?[0m                                                                           ?[90m# stepDef.LoginStepDef.userClickLoginButton()?[0m
+  ?[32mAnd ?[0m?[32muser see error message ?[0m?[32m?[1m"Epic sadface: Username and password do not match any user in this service"?[0m ?[90m# stepDef.LoginStepDef.userSeeErrorMessage(java.lang.String)?[0m
+]]></system-out>
+  <system-err><![CDATA[SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+]]></system-err>
+</testsuite>
