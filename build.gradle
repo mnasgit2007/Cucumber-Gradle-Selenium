@@ -25,6 +25,7 @@ dependencies {
     implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '5.9.2'
 
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
+    testImplementation 'junit:junit:4.13.1'
 }
 
 test {
