@@ -11,6 +11,9 @@ jobs:
   run-automation-test:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
     # download repo
     - uses: actions/checkout@v3
