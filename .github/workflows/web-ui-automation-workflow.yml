@@ -13,11 +13,11 @@ jobs:
 
     steps:
     # download repo
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v3
 
     # setup java
     - name: Set up JDK 17
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
@@ -27,12 +27,9 @@ jobs:
       uses: browser-actions/setup-chrome@latest
 
     # setup gradlew
-    - name: Grant execute permission to gradlew
+    - name: Setup gradlew
       run: chmod +x gradlew
 
-    - name: Build with Gradle
-      run: ./gradlew build
-
     # Execute gradle command for running cucumber test
-    - name: Run Cucumber Tests
+    - name: Execute Test
       run: ./gradlew cucumber
