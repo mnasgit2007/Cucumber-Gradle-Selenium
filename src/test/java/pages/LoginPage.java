@@ -38,8 +38,6 @@ public class LoginPage extends BaseTest {
     }
 
     public void validateErrorAppear(String errorMessage) {
-//        driver.getPageSource().contains(errorMessage));
         driver.findElement(text_err_msg(errorMessage)).getText();
-//        System.out.println(driver.findElement(text_err_msg(errorMessage)).getText());
     }
 }
