@@ -39,13 +39,13 @@ jobs:
 
     # Run Web Tests
     - name: Run Web Tests
-      if: matrix.test-type == 'web'
-      run: ./gradlew testWeb
+      if: matrix.test-type == 'WebTest'
+      run: ./gradlew WebTest
 
     # Run API Tests
     - name: Run API Tests
-      if: matrix.test-type == 'api'
-      run: ./gradlew testApi
+      if: matrix.test-type == 'ApiTest'
+      run: ./gradlew ApiTest
       
     # Archive Test Result
     - name: Archive Test Result
