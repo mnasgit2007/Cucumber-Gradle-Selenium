@@ -28,11 +28,11 @@ jobs:
 
     # Install dependencies
     - name: Install dependencies
-      run: ./gradlew build --no-daemon
+      run: ./gradlew build
 
     # Run API Tests
     - name: Run API Tests
-      run: ./gradlew test --tests runner.ApiTest --no-daemon
+      run: ./gradlew test --tests runner.ApiTest
 
     # Upload API Test Results
     - name: Upload API Test Results
@@ -46,14 +46,14 @@ jobs:
       uses: browser-actions/setup-chrome@latest
 
     # Run UI Tests
-    - name: Run UI Tests
-      run: ./gradlew test --tests runner.UiTest --no-daemon
+    - name: Run Web Tests
+      run: ./gradlew test --tests runner.WebTest
 
     # Upload UI Test Results
     - name: Upload UI Test Results
       uses: actions/upload-artifact@v4
       with:
-        name: ui-test-results
+        name: web-test-results
         path: build/reports/tests/test/
       
     # Archive Test Result
