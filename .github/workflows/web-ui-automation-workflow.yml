@@ -14,10 +14,6 @@ jobs:
     permissions:
       contents: write
 
-    strategy:
-      matrix:
-        test-type: [web, api]
-
     steps:
     # download repo
     - uses: actions/checkout@v3
@@ -37,15 +33,13 @@ jobs:
     - name: Setup gradlew
       run: chmod +x gradlew
 
-    # Run Web Tests
-    - name: Run Web Tests
-      if: matrix.test-type == 'WebTest'
-      run: ./gradlew WebTest
+    # Run API tests
+    - name: Run API tests
+      run: ./gradlew test --tests runner.ApiTest --no-daemon
 
-    # Run API Tests
-    - name: Run API Tests
-      if: matrix.test-type == 'ApiTest'
-      run: ./gradlew ApiTest
+    # Run UI tests
+    - name: Run UI tests
+      run: ./gradlew test --tests runner.WebTest --no-daemon
       
     # Archive Test Result
     - name: Archive Test Result
