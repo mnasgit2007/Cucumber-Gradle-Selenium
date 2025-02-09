@@ -37,9 +37,23 @@ jobs:
     - name: Run API tests
       run: ./gradlew test --tests runner.ApiTest --no-daemon
 
+    # Upload API Test Reports
+    - name: Upload API Test Reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: api-test-reports
+        path: build/reports/tests/test/
+
     # Run UI tests
     - name: Run UI tests
       run: ./gradlew test --tests runner.WebTest --no-daemon
+
+    # Upload UI Web Test Reports
+    - name: Upload UI Web Test Reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: ui-web-test-reports
+        path: build/reports/tests/test/
       
     # Archive Test Result
     - name: Archive Test Result
@@ -48,14 +62,6 @@ jobs:
       with:
         name: Cucumber Report
         path: reports
-
-    # Upload Test Reports
-    - name: Upload Test Reports
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: test-reports-${{ matrix.test-type }}
-        path: build/reports/tests/test/${{ matrix.test-type }}Test
 
     # Deploy to Github Pages
     - name: Deploy report to Github Pages
