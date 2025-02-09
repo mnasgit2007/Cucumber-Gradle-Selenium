@@ -26,6 +26,10 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    # Grant execute permission to gradlew
+    - name: Grant execute permission to gradlew
+      run: chmod +x gradlew
+
     # Install dependencies
     - name: Install dependencies
       run: ./gradlew build
