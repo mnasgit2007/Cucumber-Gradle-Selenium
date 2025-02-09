@@ -30,43 +30,29 @@ jobs:
     - name: Grant execute permission to gradlew
       run: chmod +x gradlew
 
-    # Install dependencies
-    - name: Install dependencies
-      run: ./gradlew build
-
-    # Run API Tests
-    - name: Run API Tests
-      run: ./gradlew test --tests runner.ApiTest
-
-    # Upload API Test Results
-    - name: Upload API Test Results
-      uses: actions/upload-artifact@v4
-      with:
-        name: api-test-results
-        path: build/reports/tests/test/
-
     # Setup Chrome for UI Tests
     - name: Setup Chrome
       uses: browser-actions/setup-chrome@latest
 
-    # Run UI Tests
-    - name: Run Web Tests
-      run: ./gradlew test --tests runner.WebTest
+    # Install dependencies
+    - name: Install dependencies
+      run: ./gradlew build --no-daemon
 
-    # Upload UI Test Results
-    - name: Upload UI Test Results
+    # Execute API Tests
+    - name: Execute API Tests
+      run: ./gradlew test --tests runner.ApiTest --no-daemon
+
+    # Execute UI Tests
+    - name: Execute UI Tests
+      run: ./gradlew test --tests runner.UiTest --no-daemon
+
+    # Archive Test Results
+    - name: Archive Test Results
       uses: actions/upload-artifact@v4
-      with:
-        name: web-test-results
-        path: build/reports/tests/test/
-      
-    # Archive Test Result
-    - name: Archive Test Result
-      uses: actions/upload-artifact@v4.6.0
       if: always()
       with:
-        name: Cucumber Report
-        path: reports
+        name: Test Results
+        path: build/reports
 
     # Deploy to Github Pages
     - name: Deploy report to Github Pages
