@@ -8,51 +8,52 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-automation-test:
+  run-automation-tests:
     runs-on: ubuntu-latest
 
     permissions:
       contents: write
 
     steps:
-    # download repo
-    - uses: actions/checkout@v3
+    # Checkout repository
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-    # setup java
+    # Setup Java
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
 
-    # install browser
+    # Install dependencies
+    - name: Install dependencies
+      run: ./gradlew build --no-daemon
+
+    # Run API Tests
+    - name: Run API Tests
+      run: ./gradlew test --tests runner.ApiTest --no-daemon
+
+    # Upload API Test Results
+    - name: Upload API Test Results
+      uses: actions/upload-artifact@v4
+      with:
+        name: api-test-results
+        path: build/reports/tests/test/
+
+    # Setup Chrome for UI Tests
     - name: Setup Chrome
       uses: browser-actions/setup-chrome@latest
 
-    # setup gradlew
-    - name: Setup gradlew
-      run: chmod +x gradlew
+    # Run UI Tests
+    - name: Run UI Tests
+      run: ./gradlew test --tests runner.UiTest --no-daemon
 
-    # Run API tests
-    - name: Run API tests
-      run: ./gradlew test --tests runner.ApiTest --no-daemon
-
-    # Upload API Test Reports
-    - name: Upload API Test Reports
+    # Upload UI Test Results
+    - name: Upload UI Test Results
       uses: actions/upload-artifact@v4
       with:
-        name: api-test-reports
-        path: build/reports/tests/test/
-
-    # Run UI tests
-    - name: Run UI tests
-      run: ./gradlew test --tests runner.WebTest --no-daemon
-
-    # Upload UI Web Test Reports
-    - name: Upload UI Web Test Reports
-      uses: actions/upload-artifact@v4
-      with:
-        name: ui-web-test-reports
+        name: ui-test-results
         path: build/reports/tests/test/
       
     # Archive Test Result
