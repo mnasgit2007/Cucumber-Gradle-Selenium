@@ -21,6 +21,12 @@ dependencies {
     testImplementation group: 'io.cucumber', name: 'cucumber-junit', version: '7.20.1'
     testImplementation group: 'io.cucumber', name: 'cucumber-junit-platform-engine', version: '7.20.1'
 
+    testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '5.5.0'
+    implementation group: 'org.json', name: 'json', version: '20240303'
+    testImplementation group: 'io.rest-assured', name: 'json-path', version: '5.5.0'
+    implementation group: 'io.rest-assured', name: 'json-schema-validator', version: '5.5.0'
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.26.3'
+
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.28.1'
     implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '5.9.2'
 
