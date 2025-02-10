@@ -33,11 +33,11 @@ jobs:
       run: chmod +x ./Cucumber-Gradle-Selenium/gradlew
 
     - name: Jalankan tes ApiTest
-      run: ./gradlew testApi
+      run: ./gradlew Test
       working-directory: ./Cucumber-Gradle-Selenium
 
     - name: Jalankan tes WebTest
-      run: ./gradlew testWeb
+      run: ./gradlew Test
       working-directory: ./Cucumber-Gradle-Selenium
 
     - name: Set up Docker Buildx
@@ -53,7 +53,7 @@ jobs:
       uses: docker/build-push-action@v6.13.0
       with:
         context: ./Cucumber-Gradle-Selenium
-        file: ./Cucumber-Gradle-Selenium/Dockerfile
+        file: ./Cucumber-Gradle-Selenium/docker/Dockerfile
         push: true
         tags: natsir007/cucumber-gradle-selenium:${{ github.sha }}
                 
