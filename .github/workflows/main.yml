@@ -32,12 +32,8 @@ jobs:
     - name: Berikan izin eksekusi ke gradlew
       run: chmod +x ./Cucumber-Gradle-Selenium/gradlew
 
-    - name: Jalankan tes ApiTest
-      run: ./gradlew testApi
-      working-directory: ./Cucumber-Gradle-Selenium
-
-    - name: Jalankan tes WebTest
-      run: ./gradlew testWeb
+    - name: Execute ApiTest and WebTest
+      run: ./gradlew cucumber
       working-directory: ./Cucumber-Gradle-Selenium
 
     - name: Set up Docker Buildx
@@ -56,27 +52,12 @@ jobs:
         file: ./Cucumber-Gradle-Selenium/docker/Dockerfile
         push: true
         tags: natsir007/cucumber-gradle-selenium:${{ github.sha }}
-                
-    - name: Generate dockerfiles using dockerfiletemplate
-      uses: hh24k/dockerfile-templater-action@v0.3
-      with:
-        # The template file for the dockerfile
-        dockerfile_tpl: Dockerfile.tpl
-        # The definition file for the variants
-        variants_def: variants.yml
-        # The output directory for the generated dockerfiles
-        out_dir: dockerfiles
-          
-    - name: Unggah artifact tes ApiTest
-      uses: actions/upload-artifact@v4
-      with:
-        name: api-test-results
-        path: ./Cucumber-Gradle-Selenium/reports
 
-    - name: Unggah artifact tes WebTest
+    # Archieve Test Result
+    - name: Archieve Test Result
       uses: actions/upload-artifact@v4
       with:
-        name: web-test-results
+        name: Cucumber Report
         path: ./Cucumber-Gradle-Selenium/reports
 
   deploy:
@@ -87,17 +68,19 @@ jobs:
     - name: Checkout kode
       uses: actions/checkout@v3
 
-    - name: Unduh artifact tes ApiTest
-      uses: actions/download-artifact@v4
+    - name: Archieve Test Result
+      uses: actions/upload-artifact@v4
       with:
-        name: api-test-results
+        name: Cucumber Report
         path: ./Cucumber-Gradle-Selenium/reports
 
-    - name: Unduh artifact tes WebTest
-      uses: actions/download-artifact@v4
+    # Deploy to Github Pages
+    - name: Deploy report to Github Pages
+      if: always()
+      uses: peaceiris/actions-gh-pages@v4.0.0
       with:
-        name: web-test-results
-        path: ./Cucumber-Gradle-Selenium/reports
+        PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PUBLISH_DIR: reports
 
     - name: Deploy Cucumber-Gradle-Selenium
       run: |
