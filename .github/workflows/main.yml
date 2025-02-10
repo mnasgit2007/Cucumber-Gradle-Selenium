@@ -55,24 +55,19 @@ jobs:
 
     # Archieve Test Result
     - name: Archieve Test Result
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4.0.0
+      if: always()
       with:
         name: Cucumber Report
         path: ./Cucumber-Gradle-Selenium/reports
 
-    - name: Deploy Test Result
-      uses: actions/upload-artifact@v4
-      with:
-        name: Deploy Cucumber Report Test
-        path: ./Cucumber-Gradle-Selenium/reports
-
     # Deploy to Github Pages
     - name: Deploy report to Github Pages
-      if: github.ref == 'refs/heads/main'
+      if: always()
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: gh-pages
-        publish_dir: ./public
+        publish_dir: ./reports
 
     - name: Deploy Cucumber-Gradle-Selenium
       run: |
