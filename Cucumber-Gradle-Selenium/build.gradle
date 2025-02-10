@@ -59,11 +59,6 @@ task testWeb(type: Test) {
     systemProperty 'cucumber.plugin', 'html:reports/cucumber-web-report.html'
 }
 
-task testAll(dependsOn: ['testApi', 'testWeb']) {
-    description = 'Runs all tests'
-    group = 'verification'
-}
-
     configurations {
         cucumberRuntime{
             extendsFrom testImplementation
@@ -72,7 +67,7 @@ task testAll(dependsOn: ['testApi', 'testWeb']) {
 
 def tags = (findProperty('tags') == null) ? 'not @exclude' : findProperty('tags') + ' and not @exclude'
 
-tasks.register('ApiTest') {
+tasks.register('cucumber') {
     description 'Running Cucumber Test'
     dependsOn assemble, compileTestJava
     doLast {
