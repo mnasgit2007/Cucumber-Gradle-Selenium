@@ -1,11 +1,12 @@
-# Menggunakan image dasar
-FROM openjdk:17-jdk-slim
-
-# Menetapkan direktori kerja
+# Tahap 1: Build
+FROM gradle:8.2-jdk17 AS build
 WORKDIR /app
+COPY . .
+RUN gradle build
 
-# Menyalin file jar ke dalam image
-COPY target/myapp.jar myapp.jar
+# Tahap 2: Run
+FROM openjdk:17-jre
+WORKDIR /app
+COPY --from=build /app/build/libs/myapp.jar /target/myapp.jar
+ENTRYPOINT ["java", "-jar", "/target/myapp.jar"]
 
-# Menjalankan aplikasi
-CMD ["java", "-jar", "myapp.jar"]
