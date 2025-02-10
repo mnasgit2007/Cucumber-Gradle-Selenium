@@ -46,9 +46,7 @@ task testApi(type: Test) {
     group = 'verification'
     include '**/*ApiTest.java'
     systemProperty 'api.feature', 'src/test/java/features'
-    plugin = {"pretty","html:reports/cucumber.html", "json:reports/cucumber.json"}
-    glue = {"stepDef"}
-    tags = "@api"
+    plugin 'pretty','html:reports/cucumber.html', 'json:reports/cucumber.json'
 }
 
 task testWeb(type: Test) {
@@ -56,9 +54,7 @@ task testWeb(type: Test) {
     group = 'verification'
     include '**/*WebTest.java'
     systemProperty 'web.feature', 'src/test/java/features'
-    plugin = {"pretty","html:reports/cucumber.html", "json:reports/cucumber.json"}
-    glue = {"stepDef"}
-    tags = "@login"
+    plugin 'pretty','html:reports/cucumber.html', 'json:reports/cucumber.json'
 }
 
     configurations {
