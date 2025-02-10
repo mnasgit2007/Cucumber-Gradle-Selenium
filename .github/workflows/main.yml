@@ -68,10 +68,10 @@ jobs:
     - name: Checkout kode
       uses: actions/checkout@v3
 
-    - name: Archieve Test Result
+    - name: Deploy Test Result
       uses: actions/upload-artifact@v4
       with:
-        name: Cucumber Report
+        name: Deploy Cucumber Report Test
         path: ./Cucumber-Gradle-Selenium/reports
 
     # Deploy to Github Pages
