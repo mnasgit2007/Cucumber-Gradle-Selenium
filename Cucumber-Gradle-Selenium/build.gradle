@@ -34,6 +34,14 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
 }
 
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'org.natsir.MyApp' // Ganti dengan kelas utama Anda
+        )
+    }
+}
+
 test {
     useJUnitPlatform()
     testLogging {
