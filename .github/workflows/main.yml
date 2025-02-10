@@ -49,10 +49,11 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build dan push Docker image untuk Cucumber-Gradle-Selenium
-      uses: docker/build-push-action@v3
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v6.13.0
       with:
         context: ./Cucumber-Gradle-Selenium
+        file: ./Cucumber-Gradle-Selenium/Dockerfile
         push: true
         tags: natsir007/cucumber-gradle-selenium:${{ github.sha }}
 
