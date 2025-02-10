@@ -76,11 +76,14 @@ jobs:
 
     # Deploy to Github Pages
     - name: Deploy report to Github Pages
-      if: always()
-      uses: peaceiris/actions-gh-pages@v4.0.0
+      uses: peaceiris/actions-gh-pages@v4
+        # If you're changing the branch from main,
+        # also change the `main` in `refs/heads/main`
+        # below accordingly.
+      if: github.ref == 'refs/heads/main'
       with:
-        PERSONAL_TOKEN: ${{ secrets.GH_TOKEN }}
-        PUBLISH_DIR: reports
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
 
     - name: Deploy Cucumber-Gradle-Selenium
       run: |
