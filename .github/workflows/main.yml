@@ -33,11 +33,11 @@ jobs:
       run: chmod +x ./Cucumber-Gradle-Selenium/gradlew
 
     - name: Jalankan tes ApiTest
-      run: ./gradlew cucumber
+      run: ./gradlew testApi
       working-directory: ./Cucumber-Gradle-Selenium
 
     - name: Jalankan tes WebTest
-      run: ./gradlew cucumber
+      run: ./gradlew testWeb
       working-directory: ./Cucumber-Gradle-Selenium
 
     - name: Set up Docker Buildx
@@ -56,7 +56,17 @@ jobs:
         file: ./Cucumber-Gradle-Selenium/Dockerfile
         push: true
         tags: natsir007/cucumber-gradle-selenium:${{ github.sha }}
-
+                
+    - name: Generate dockerfiles using dockerfiletemplate
+      uses: hh24k/dockerfile-templater-action@v0.3
+      with:
+        # The template file for the dockerfile
+        dockerfile_tpl: Dockerfile.tpl
+        # The definition file for the variants
+        variants_def: variants.yml
+        # The output directory for the generated dockerfiles
+        out_dir: dockerfiles
+          
     - name: Unggah artifact tes ApiTest
       uses: actions/upload-artifact@v4
       with:
