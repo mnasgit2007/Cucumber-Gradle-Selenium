@@ -63,20 +63,20 @@ test {
 
 def tags = (findProperty('tags') == null) ? 'not @exclude' : findProperty('tags') + ' and not @exclude'
 
-tasks.register('cucumber') {
-    description 'Running Cucumber Test'
-    dependsOn assemble, compileTestJava
-    doLast {
-        javaexec {
-            main = "io.cucumber.core.cli.Main"
-            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-            args = [
-                    '--plugin', 'pretty',
-                    '--plugin', 'html:reports/cucumber-api-report.html',
-                    '--glue', 'stepDef',
-                    '--tags', "${tags}",
-                    'src/test/java/features']
-        }
+// tasks.register('cucumber') {
+//     description 'Running Cucumber Test'
+//     dependsOn assemble, compileTestJava
+//     doLast {
+//         javaexec {
+//             main = "io.cucumber.core.cli.Main"
+//             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+//             args = [
+//                     '--plugin', 'pretty',
+//                     '--plugin', 'html:reports/cucumber-api-report.html',
+//                     '--glue', 'stepDef',
+//                     '--tags', "${tags}",
+//                     'src/test/java/features']
+//         }
 
 tasks.register('API') {
     description 'Running API Test'
@@ -89,7 +89,7 @@ tasks.register('API') {
                     '--plugin', 'pretty',
                     '--plugin', 'html:reports/cucumber-api-report.html',
                     '--glue', 'stepDef',
-                    '--tags', "${@api}",
+                    '--tags', "${api}",
                     'src/test/java/features']
         }
 
@@ -104,7 +104,7 @@ tasks.register('WEB') {
                     '--plugin', 'pretty',
                     '--plugin', 'html:reports/cucumber-api-report.html',
                     '--glue', 'stepDef',
-                    '--tags', "${@web}",
+                    '--tags', "${web}",
                     'src/test/java/features']
         }
     }
