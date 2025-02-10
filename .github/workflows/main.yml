@@ -32,16 +32,12 @@ jobs:
     - name: Berikan izin eksekusi ke gradlew
       run: chmod +x ./Cucumber-Gradle-Selenium/gradlew
 
-    - name: Build Cucumber-Gradle-Selenium
-      run: ./gradlew build --no-daemon
-      working-directory: ./Cucumber-Gradle-Selenium
-
     - name: Jalankan tes ApiTest
-      run: ./gradlew ApiTest --no-daemon
+      run: ./gradlew ApiTest
       working-directory: ./Cucumber-Gradle-Selenium
 
     - name: Jalankan tes WebTest
-      run: ./gradlew WebTest --no-daemon
+      run: ./gradlew WebTest
       working-directory: ./Cucumber-Gradle-Selenium
 
     - name: Set up Docker Buildx
