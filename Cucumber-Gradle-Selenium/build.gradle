@@ -41,19 +41,25 @@ test {
     }
 }
 
-// task testApi(type: Test) {
-//     description = 'Runs API tests'
-//     group = 'verification'
-//     include '**/*ApiTest.java'
-//     systemProperty 'api.feature', 'src/test/features'
-// }
+task testApi(type: Test) {
+    description = 'Runs API tests'
+    group = 'verification'
+    include '**/*ApiTest.java'
+    systemProperty 'api.feature', 'src/test/java/features'
+    plugin = {"pretty","html:reports/cucumber.html", "json:reports/cucumber.json"}
+    glue = {"stepDef"}
+    tags = "@api"
+}
 
-// task testWeb(type: Test) {
-//     description = 'Runs WEB tests'
-//     group = 'verification'
-//     include '**/*WebTest.java'
-//     systemProperty 'web.feature', 'src/test/features'
-// }
+task testWeb(type: Test) {
+    description = 'Runs WEB tests'
+    group = 'verification'
+    include '**/*WebTest.java'
+    systemProperty 'web.feature', 'src/test/java/features'
+    plugin = {"pretty","html:reports/cucumber.html", "json:reports/cucumber.json"}
+    glue = {"stepDef"}
+    tags = "@login"
+}
 
     configurations {
         cucumberRuntime{
@@ -63,23 +69,8 @@ test {
 
 def tags = (findProperty('tags') == null) ? 'not @exclude' : findProperty('tags') + ' and not @exclude'
 
-// tasks.register('cucumber') {
-//     description 'Running Cucumber Test'
-//     dependsOn assemble, compileTestJava
-//     doLast {
-//         javaexec {
-//             main = "io.cucumber.core.cli.Main"
-//             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-//             args = [
-//                     '--plugin', 'pretty',
-//                     '--plugin', 'html:reports/cucumber-api-report.html',
-//                     '--glue', 'stepDef',
-//                     '--tags', "${tags}",
-//                     'src/test/java/features']
-//         }
-
-tasks.register('API') {
-    description 'Running API Test'
+tasks.register('cucumber') {
+    description 'Running Cucumber Test'
     dependsOn assemble, compileTestJava
     doLast {
         javaexec {
@@ -89,22 +80,7 @@ tasks.register('API') {
                     '--plugin', 'pretty',
                     '--plugin', 'html:reports/cucumber-api-report.html',
                     '--glue', 'stepDef',
-                    '--tags', "${api}",
-                    'src/test/java/features']
-        }
-
-tasks.register('WEB') {
-    description 'Running WEB Test'
-    dependsOn assemble, compileTestJava
-    doLast {
-        javaexec {
-            main = "io.cucumber.core.cli.Main"
-            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-            args = [
-                    '--plugin', 'pretty',
-                    '--plugin', 'html:reports/cucumber-api-report.html',
-                    '--glue', 'stepDef',
-                    '--tags', "${web}",
+                    '--tags', "${tags}",
                     'src/test/java/features']
         }
     }
