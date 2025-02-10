@@ -33,11 +33,11 @@ jobs:
       run: chmod +x ./Cucumber-Gradle-Selenium/gradlew
 
     - name: Jalankan tes ApiTest
-      run: ./gradlew ApiTest
+      run: ./gradlew testApi
       working-directory: ./Cucumber-Gradle-Selenium
 
     - name: Jalankan tes WebTest
-      run: ./gradlew ApiTest
+      run: ./gradlew testWeb
       working-directory: ./Cucumber-Gradle-Selenium
 
     - name: Set up Docker Buildx
