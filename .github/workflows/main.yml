@@ -60,14 +60,6 @@ jobs:
         name: Cucumber Report
         path: ./Cucumber-Gradle-Selenium/reports
 
-  deploy:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout kode
-      uses: actions/checkout@v3
-
     - name: Deploy Test Result
       uses: actions/upload-artifact@v4
       with:
@@ -76,13 +68,10 @@ jobs:
 
     # Deploy to Github Pages
     - name: Deploy report to Github Pages
-      uses: peaceiris/actions-gh-pages@v4
-        # If you're changing the branch from main,
-        # also change the `main` in `refs/heads/main`
-        # below accordingly.
       if: github.ref == 'refs/heads/main'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
         publish_dir: ./public
 
     - name: Deploy Cucumber-Gradle-Selenium
