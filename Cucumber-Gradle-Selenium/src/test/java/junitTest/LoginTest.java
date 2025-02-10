@@ -14,7 +14,8 @@ public class LoginTest {
     @Test
     public void loginTest(){
         // inisialisasi webdriver
-        WebDriver driver = WebDriverManager.chromiumdriver().create();
+        WebDriverManager.chromedriver().create();
+        WebDriver driver = new ChromeDriver();
 
         // inisialisasi page object
         LoginPage loginPage = new LoginPage(driver);
