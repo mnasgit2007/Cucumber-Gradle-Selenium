@@ -47,7 +47,7 @@ task testApi(type: Test) {
     include '**/*ApiTest.java'
     // systemProperty 'api.feature', 'src/test/java/features'
     systemProperty 'cucumber.features', 'src/test/java/features'
-    systemProperty 'cucumber.plugin', 'html:reports/cucumber-web-report.html'
+    systemProperty 'cucumber.plugin', 'html:reports/cucumber-api-report.html'
 }
 
 task testWeb(type: Test) {
@@ -57,6 +57,11 @@ task testWeb(type: Test) {
     // systemProperty 'web.feature', 'src/test/java/features'
     systemProperty 'cucumber.features', 'src/test/java/features'
     systemProperty 'cucumber.plugin', 'html:reports/cucumber-web-report.html'
+}
+
+task testAll(dependsOn: ['testApi', 'testWeb']) {
+    description = 'Runs all tests'
+    group = 'verification'
 }
 
     configurations {
