@@ -25,6 +25,10 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    # Install Chrome and ChromeDriver
+    - name: Setup Chrome
+      uses: browser-actions/setup-chrome@latest
+
     - name: Berikan izin eksekusi ke gradlew
       run: chmod +x ./Cucumber-Gradle-Selenium/gradlew
 
