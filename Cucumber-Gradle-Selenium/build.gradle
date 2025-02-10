@@ -45,16 +45,18 @@ task testApi(type: Test) {
     description = 'Runs API tests'
     group = 'verification'
     include '**/*ApiTest.java'
-    systemProperty 'api.feature', 'src/test/java/features'
-    plugin 'pretty','html:reports/cucumber.html', 'json:reports/cucumber.json'
+    // systemProperty 'api.feature', 'src/test/java/features'
+    systemProperty 'cucumber.features', 'src/test/java/features'
+    systemProperty 'cucumber.plugin', 'html:reports/cucumber-web-report.html'
 }
 
 task testWeb(type: Test) {
     description = 'Runs WEB tests'
     group = 'verification'
     include '**/*WebTest.java'
-    systemProperty 'web.feature', 'src/test/java/features'
-    plugin 'pretty','html:reports/cucumber.html', 'json:reports/cucumber.json'
+    // systemProperty 'web.feature', 'src/test/java/features'
+    systemProperty 'cucumber.features', 'src/test/java/features'
+    systemProperty 'cucumber.plugin', 'html:reports/cucumber-web-report.html'
 }
 
     configurations {
