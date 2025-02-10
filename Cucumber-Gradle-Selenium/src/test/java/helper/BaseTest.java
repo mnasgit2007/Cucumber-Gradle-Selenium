@@ -44,7 +44,9 @@ public class BaseTest {
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
-    public static void quitDriver(){
-        driver.quit();
+    public void quitDriver() {
+        if (driver != null) {
+            driver.quit();
     }
+}
 }
