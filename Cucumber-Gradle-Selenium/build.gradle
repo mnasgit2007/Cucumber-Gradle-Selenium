@@ -41,19 +41,19 @@ test {
     }
 }
 
-task testApi(type: Test) {
-    description = 'Runs API tests'
-    group = 'verification'
-    include '**/*ApiTest.java'
-    systemProperty 'api.feature', 'src/test/features'
-}
+// task testApi(type: Test) {
+//     description = 'Runs API tests'
+//     group = 'verification'
+//     include '**/*ApiTest.java'
+//     systemProperty 'api.feature', 'src/test/features'
+// }
 
-task testWeb(type: Test) {
-    description = 'Runs WEB tests'
-    group = 'verification'
-    include '**/*WebTest.java'
-    systemProperty 'web.feature', 'src/test/features'
-}
+// task testWeb(type: Test) {
+//     description = 'Runs WEB tests'
+//     group = 'verification'
+//     include '**/*WebTest.java'
+//     systemProperty 'web.feature', 'src/test/features'
+// }
 
     configurations {
         cucumberRuntime{
@@ -75,6 +75,36 @@ tasks.register('cucumber') {
                     '--plugin', 'html:reports/cucumber-api-report.html',
                     '--glue', 'stepDef',
                     '--tags', "${tags}",
+                    'src/test/java/features']
+        }
+
+tasks.register('API') {
+    description 'Running API Test'
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = [
+                    '--plugin', 'pretty',
+                    '--plugin', 'html:reports/cucumber-api-report.html',
+                    '--glue', 'stepDef',
+                    '--tags', "${@api}",
+                    'src/test/java/features']
+        }
+
+tasks.register('WEB') {
+    description 'Running WEB Test'
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = [
+                    '--plugin', 'pretty',
+                    '--plugin', 'html:reports/cucumber-api-report.html',
+                    '--glue', 'stepDef',
+                    '--tags', "${@web}",
                     'src/test/java/features']
         }
     }
